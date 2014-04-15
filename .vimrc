@@ -3,13 +3,19 @@
 " Enable pathogen and inject my plugins
 execute pathogen#infect()
 
-
-" use a nice colorscheme
+" use a nice colorscheme and typeface
 colorscheme vividchalk
 set guifont=Source\ Code\ Pro:h11
 
 "turns on line numbers
 set number
+
+"underline row and always show the cursor position
+set cursorline
+set ruler
+
+" Turn on syntax highlighting
+syntax on
 
 "sets tabs and auto-indent
 filetype indent on
@@ -20,7 +26,8 @@ set autoindent
 set smartindent
 set cindent
 
-set spell
+" Allow backspacing over everything in insert mode
+set backspace=2
 
 "highlights trailing whitespace
 highlight ExtraWhitespace ctermbg=red guibg=red
@@ -29,8 +36,13 @@ au BufEnter * match ExtraWhitespace /\s\+$/
 au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 au InsertLeave * match ExtraWhiteSpace /\s\+$/
 
-" Highlight row
-set cursorline
+" Highlight trailing whitespace this isn't working for some reason
+"highlight ExtraWhitespace ctermbg=red guibg=red ctermfg=white guifg=white
+"match ExtraWhitespace /\s\+$/
+"autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+"autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+"autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+"autocmd BufWinLeave * call clearmatches()
 
 " Display a verbose status line
 set laststatus=2
@@ -38,9 +50,6 @@ set statusline=\ %F\ %=%([%H%W%R%M]%)\ [%Y:%{&ff}]\ [ASCII=\%03.3b]\ [%03v,\ %03
 
 " Ensure that there is no eol character
 set noeol
-
-" Always show the cursor position
-set ruler
 
 " Toggling paste mode should make copy/pasting easier too
 function! TogglePaste()
@@ -90,8 +99,7 @@ vnoremap * y/<C-r>"<CR>//e<CR>v??<CR>o
 vnoremap # y?<C-r>"<CR>//e<CR>v??<CR>o
 
 " viminfo options
-" read/write a .viminfo file, don't store more than
-" 50 lines of registers
+" read/write a .viminfo file, don't store more than 50 lines of registers
 set viminfo='20,\"50
 
 " LargeFile.vim settings
@@ -103,9 +111,6 @@ let g:LargeFile = 100
 " Grabbed from $VIM/ftplugin
 filetype plugin on
 filetype indent on
-
-" Turn on syntax highlighting
-syntax on
 
 " Suffixes that get lower priority when doing tab completion for filenames
 " These are files I am not likely to want to edit or read.
@@ -132,9 +137,6 @@ nmap <silent> <Leader>w :tabnext<CR>
 nmap <silent> <C-t> :tabnew<CR>
 vmap <silent> <C-t> <ESC>:tabnew<CR>
 imap <silent> <C-t> <ESC>:tabnew<CR>
-
-" Allow backspacing over everything in insert mode
-set backspace=2
 
 " Folding options
 set foldcolumn=2
@@ -230,10 +232,3 @@ endif
 " Show tabs
 set list listchars=tab:»~,trail:·
 
-" Highlight trailing whitespace this isn't working for some reason
-highlight ExtraWhitespace ctermbg=red guibg=red ctermfg=white guifg=white
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
